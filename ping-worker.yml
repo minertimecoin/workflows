@@ -1,20 +1,21 @@
-name: Ping Cloudflare Worker every 15 seconds
+name: Ping TON deposit checker every 15 seconds
 
 on:
   schedule:
-    - cron: "*/1 * * * *" # GitHub запускает workflow каждые 1 минуту
-  workflow_dispatch: # возможность запустить вручную
+    - cron: "*/1 * * * *" # GitHub запускает каждые 1 минуту
+  workflow_dispatch: # возможность вручную запустить
 
 jobs:
   ping:
     runs-on: ubuntu-latest
     steps:
-      - name: Four pings every 15 seconds
+      - name: Four TON pings every 15 seconds
         run: |
           for i in 1 2 3 4; do
-            echo "⚡ Ping $i ($(date +'%H:%M:%S'))"
-            curl -s -o /dev/null -w "%{http_code}" "https://miner.one-oh-one.app/api/check_deposits" || true
+            echo "💎 TON check $i ($(date +'%H:%M:%S'))"
+            curl -s -o /dev/null -w "%{http_code}" "https://miner.one-oh-one.app/api/cron_deposits_ton" || true
             if [ $i -lt 4 ]; then
               sleep 15
             fi
           done
+
